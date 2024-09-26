@@ -1,0 +1,45 @@
+create table cliente(
+	id serial not null primary key,
+	nome varchar(100),
+	cpf char(11)
+);
+
+create table cartao(
+	id serial not null primary key,
+	numeroCartao char(16),
+	mes numeric(2),
+	ano numeric(2),
+	nomeCartao varchar(30),
+	cvc char(3),
+	idCliente int,
+	foreign key (idCliente) references cliente(id)
+);
+
+create table produto(
+	id serial not null primary key,
+	nome varchar(50),
+	marca varchar(50)
+);
+
+create table estoque(
+	id serial not null primary key,
+	quantidade int,
+	idProduto int,
+	foreign key (idProduto) references produto(id)
+);
+
+create table venda(
+	id serial not null primary key,
+	idCliente int,
+	idProduto int,
+	idPagamento int,
+	foreign key (idCliente) references cliente(id),
+	foreign key (idProduto) references produto(id),
+	foreign key (idPagamento) references pagamento(id)
+);
+
+create table pagamento(
+	id serial not null primary key,
+	idCartao int,
+	idVenda int
+);
